@@ -1,0 +1,1394 @@
+﻿@model Techwaukee.goRecruitAI.Models.CandidateDetail
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script src="~/js/jquery.multi-select.min.js"></script>
+<script src="~/js/jquery.multi-select.js"></script>
+<script src="~/js/jquery.js"></script>
+<script>
+    var currentStep = 1;
+    $(document).ready(function () {
+
+        //var prevStep = 0;
+        $("#div_Loader").hide();
+        $('#lblPagetitle').text("Add Candidate");
+        $('#lblPagetitle1').text("Add Candidate");
+
+    })
+
+    function ChangeNextStep() {
+        
+        currentStep = currentStep + 1;
+        alert(currentStep);
+        if (currentStep > 1) {
+            
+            $("#divSection" + currentStep).show();
+            $("#divSection" + (currentStep - 1)).hide();
+            $("#btnStep" + currentStep).addClass("js-active");
+            $("#btnPrev").show();
+            if (currentStep >= 5) {
+                $("#btnNext").hide();
+            }
+        }
+    }
+    function ChangePrevStep() {
+        
+        if (currentStep > 1) {
+            $("#divSection" + (currentStep - 1)).show();
+            $("#divSection" + currentStep).hide();
+            $("#btnStep" + currentStep).removeClass("js-active");
+            currentStep = currentStep - 1;
+            $("#btnNext").show();
+            if (currentStep == 1) {
+                $("#btnPrev").hide();
+            }
+        }
+    }
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="card">
+            <div class="col-lg-12 row">
+                <div class="container mx-auto mt-lg-0 px-5">
+                    <header class="d-flex align-items-center mt-4">
+                        <h4 id="lblJobtitle">Adding new candidate for GCP Engineer role</h4>
+                    </header>
+                </div>
+            </div>
+            <div class="multisteps-form__progress mt-5 mb-2">
+                <button class="multisteps-form__progress-btn js-active" type="button" id="btnStep1" title="User Info">
+                    <span>Candidate Info</span>
+                </button>
+                <button class="multisteps-form__progress-btn" type="button" id="btnStep2" title="Address">Document</button>
+                <button class="multisteps-form__progress-btn" type="button" id="btnStep3" title="Socials">Assessment</button>
+                <button class="multisteps-form__progress-btn" type="button" id="btnStep4" title="Employer">Employment Details</button>
+                <button class="multisteps-form__progress-btn" type="button" id="btnStep5" title="Profile">Job Submission</button>
+            </div>
+            <div class="row mt-0">
+
+                <div class="col-lg-8" id="divSection1">
+                    <div class="row mt-0">
+                        <div class="col-12 m-auto">
+                            <form class="multisteps-form__form">
+                                <!--single form panel-->
+                                <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                    <h5 class="font-weight-bolder mb-2">Candidate basic info</h5>
+                                    <p class="mb-0 text-sm">
+                                        <i class="fas fa-envelope fa-flip-horizontal" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="john@creative-tim.com" aria-label="john@creative-tim.com"></i><span class="sr-only">john@creative-tim.com</span>&nbsp;saikiran.nare@erpanalysts.com&nbsp;&nbsp;|&nbsp;&nbsp;<span class="ni-blue">Change</span>
+                                    </p>
+                                    <div class="multisteps-form__content">
+
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-6">
+                                                <label>First Name</label><span class="ni-red"> *</span>
+                                                <input asp-for="Candidatename" class="multisteps-form__input form-control" placeholder="eg. Michael" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                <span asp-validation-for="Candidatename" class="text-danger"></span>
+                                            </div>
+                                            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                <label>Last Name</label>
+                                                <input asp-for="Lastname" class="multisteps-form__input form-control" placeholder="eg. Prior" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                <span asp-validation-for="Lastname" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-5">
+                                                <label>location State</label><span class="ni-red"> *</span>
+                                                <select asp-for="State" asp-items="@(new SelectList(ViewBag.States, "StateId", "StateName"))" class="multisteps-form__input form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                    <option value="">-- Select State --</option>
+                                                </select>
+                                                <span asp-validation-for="State" class="text-danger"></span>
+                                                @*                                                 <input class="multisteps-form__input form-control" type="text" placeholder="- Select State -" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                *@
+                                            </div>
+                                            <div class="col-12 col-sm-5 mt-3 mt-sm-0">
+                                                <label>location City</label><span class="ni-red"> *</span>
+                                                <select asp-for="City" asp-items="@(new SelectList(ViewBag.Cities, "CityId", "CityName"))" class="multisteps-form__input form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                    <option value="">-- Select City --</option>
+                                                </select>
+                                                <span asp-validation-for="City" class="text-danger"></span>
+                                                @*                                                 <input class="multisteps-form__input form-control" type="text" placeholder="- Select City -" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                *@
+                                            </div>
+                                            <div class="col-12 col-sm-2 mt-3 mt-sm-0">
+                                                <label>Relocation</label><span class="ni-red"> *</span>
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="">- Select -</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-6">
+                                                <label>Sourced From</label><span class="ni-red"> *</span>
+                                                <select asp-for="Sourcedfrom" asp-items="@(new SelectList(ViewBag.CandidateSource, "CandidateSourceId", "CandidateSourceName"))" class="multisteps-form__input form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                    <option value="">- Select Sourced -</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                <label>Contact Number</label><span class="ni-red"> *</span>
+                                                <input class="multisteps-form__input form-control" type="email" placeholder="eg. 9877446677" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-6">
+                                                <label>Available</label><span class="ni-red"> *</span>
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="Immediate">- Select -</option>
+                                                    <option value="Immediate">Immediate</option>
+                                                    <option value="1 Week">1 Week</option>
+                                                    <option value="2 Weeks">2 Weeks</option>
+                                                    <option value="3 Weeks">3 Weeks</option>
+                                                    <option value="4 Weeks and Above">4 Weeks and Above</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                <label>LinkedIn</label>
+                                                <input class="multisteps-form__input form-control" type="email" placeholder="eg. https://www.linkedin.com/company/techwaukee" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-4">
+                                                <label>Visa Type</label><span class="ni-red"> *</span>
+                                                <select asp-for="VisaStatus" asp-items="@(new SelectList(ViewBag.VisaTypes, "VisaId", "VisaName"))" class="multisteps-form__input form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                    <option value="">- Select Visa -</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                                                <label>Work experience</label><span class="ni-red"> *</span>
+                                                <select asp-for="YearsofExp" asp-items="@(new SelectList(ViewBag.ExpYears, "YearMasterId", "YearMasterName"))" class="multisteps-form__input form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                    <option value="0">- Select Years -</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-4 mt-3 mt-sm-0">
+                                                <label>US experience</label><span class="ni-red"> *</span>
+                                                <select asp-for="YearsofExp" asp-items="@(new SelectList(ViewBag.ExpYears, "YearMasterId", "YearMasterName"))" class="multisteps-form__input form-control" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                    <option value="0">- Select Years -</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Yes, the candidate is willing to work on Techwaukee's W2.</h6>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="divSection2" style="display: none;" class="col-lg-8">
+                    <div class="row mt-0">
+                        <div class="col-12 m-auto">
+                            <form class="multisteps-form__form">
+                                <!--single form panel-->
+                                <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                    <h5 class="font-weight-bolder mb-2">Document</h5>
+                                    <div class="multisteps-form__content">
+                                        <div class="row mt-4 mb-3">
+                                            <div class="col-12 col-sm-6">
+                                                <label class="form-label">Add candidate's updated resume</label><span class="ni-red"> *</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="ni-red text-sm">Remove</span><br>
+
+                                                <input type="file" id="fileInput" name="file">
+
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4 mb-3 ">
+                                            <div class="col-12 col-sm-6">
+                                                <label class="form-label">Add candidate's photo ID Proof</label><span class="ni-red"> *</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="ni-red text-sm">Remove</span><br>
+                                                <form id="uploadForm" enctype="multipart/form-data">
+                                                    <input type="file" id="fileInput" name="file">
+                                                </form>
+                                            </div>
+                                            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                <label>ID Type</label>
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="Immediate">- Type -</option>
+                                                    <option value="Driver's License">Driver's License</option>
+                                                    <option value="Passport">Passport</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4 mb-3">
+                                            <div class="col-12 col-sm-6">
+                                                <label class="form-label">Add candidate's latest H1B Visa copy</label><span class="ni-red"> *</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="ni-red text-sm">Remove</span><br>
+                                                <form id="uploadForm" enctype="multipart/form-data">
+                                                    <input type="file" id="fileInput" name="file">
+                                                </form>
+                                            </div>
+                                            <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                <label>End Date</label>
+                                                <input class="multisteps-form__input form-control datepicker flatpickr-input" type="text" placeholder="select date" readonly="readonly" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="divSection3" style="display: none;" class="col-lg-8">
+                    <div class="row mt-0">
+                        <div class="col-12 m-auto">
+                            <form class="multisteps-form__form">
+                                <!--single form panel-->
+                                <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                    <h5 class="font-weight-bolder mb-4">Candidate Assessment</h5>
+                                    <div class="multisteps-form__content">
+                                        <span class="mt-4 ni-blue h6">LinkedIn</span><span> | </span><span class="ni-red text-sm">Candidate has no linkedIn profile</span>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate have more than 500 connections on LinkedIn</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate's Linkedin profile is complete &amp; Matching (Photo, Education, Employment, Location)?</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate has any MNC work experience?</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate has any recommendation from Manager's / Client's?</h6>
+                                            </div>
+                                        </div>
+                                        <h6 class="mt-4 ni-blue">Recruiter</h6>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate has good communication skills</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate is comfortable with the shift timings</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate has his own laptop to support this project</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate's resume include education details</h6>
+                                            </div>
+                                        </div>
+                                        <h6 class="mt-4 ni-blue">Visa</h6>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate has good communication skills</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate is comfortable with the shift timings</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate has his own laptop to support this project</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                </div>
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">Candidate's resume include education details</h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="d-flex align-items-center">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <label><h6 class="ni-blue">Recruiter's rating</h6></label>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <h5 class="font-weight-bold" style="float: right;"><span class="text-dark" id="value1">70 %</span></h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="">
+                                                        <div id="slider-format" class="noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr">
+                                                            <div class="noUi-base"><div class="noUi-connects"><div class="noUi-connect" style="transform: translate(0%, 0px) scale(0.7, 1);"></div></div><div class="noUi-origin" style="transform: translate(-300%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="100.0" aria-valuenow="80.0" aria-valuetext="80 %"><div class="noUi-touch-area"></div></div></div></div>
+                                                        </div>
+                                                        <p class="ps-1 mb-0">
+                                                            <span class="text-xs">0</span>
+                                                            <span class="text-xs mt-2" style="float: right;">100</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-lg-2 p-2 mt-4">
+                                                <h1 class="ni-blue">50%</h1>
+                                                <span>System rating</span>
+                                            </div>
+                                            <div class="align-items-center col-lg-10">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlTextarea1">Candidate's Assessment Remarks</label>
+                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="divSection4" style="display: none;" class="col-lg-8">
+                    <div id="No" style="display: none;">
+                        <div class="row mt-0">
+                            <div class="col-12 m-auto">
+                                <form class="multisteps-form__form">
+                                    <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                        <h5 class="font-weight-bolder mb-2">Employment Details</h5>
+                                        <div class="multisteps-form__content">
+                                            <div class="row mt-3">
+                                                <div class="col-12 col-sm-6">
+                                                    <label>Candidate's designation</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Michael" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label>Employment Organization</label><span class="float-end"><span class="ni-blue text-sm">Add more</span> | <span class="ni-red text-sm">Remove</span></span>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Techwaukee" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-12 col-sm-6">
+                                                    <label>Start date</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Michael" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                    <label>End date</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Prior" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="yes" style="display: block;">
+                        <div class="row mt-0">
+                            <div class="col-12 m-auto">
+                                <form class="multisteps-form__form" id="checke">
+                                    <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                        <h5 class="font-weight-bolder mb-2">Employment Details</h5>
+                                        <div class="multisteps-form__content">
+                                            <div class="row mt-3">
+                                                <div class="col-12 col-sm-12">
+                                                    <label>Employer offical email ID</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. mohan@techwaukee.com" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                            </div>
+                                            <div class="button-row d-flex mt-4">
+                                                <button class="btn bg-gradient-light mb-0 js-btn-prev" type="button" title="Prev">Prev</button>
+                                                <button class="btn bg-gradient-info ms-auto mb-0 js-btn-next" id="buttoncheck" type="buttoncheck" title="Check">Check</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form class="multisteps-form__form" id="viewe">
+                                    <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                        <h5 class="font-weight-bolder mb-2">Employment Details</h5>
+                                        <p class="mb-0 text-sm">
+                                            <i class="fas fa-envelope fa-flip-horizontal" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="john@creative-tim.com" aria-label="john@creative-tim.com"></i><span class="sr-only">john@creative-tim.com</span>&nbsp;saikiran.nare@erpanalysts.com&nbsp;&nbsp;|&nbsp;&nbsp;<span class="ni-blue">Change</span>
+                                        </p>
+                                        <div class="multisteps-form__content">
+                                            <div class="row mt-3">
+                                                <div class="col-12 col-sm-6">
+                                                    <label>Employment Organization</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Dice" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label>Employer Name</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Dice" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-12 col-sm-6">
+                                                    <label>Employer designation</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Michael" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                                <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                    <label>Contact Number</label>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Prior" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="divSection5" style="display: none;" class="col-lg-8">
+                    <div class="row mt-0">
+                        <div class="col-12 m-auto">
+                            <form class="multisteps-form__form">
+                                <!--single form panel-->
+                                <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                    <h5 class="font-weight-bolder mb-2">Submission</h5>
+                                    <h6 class="font-weight-bolder mt-4 mb-2">Candidate's Name</h6>
+                                    <p class="mb-0 text-sm">
+                                        <i class="fas fa-envelope fa-flip-horizontal" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="john@creative-tim.com" aria-label="john@creative-tim.com"></i><span class="sr-only">john@creative-tim.com</span>&nbsp;saikiran.nare@erpanalysts.com&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-phone fa-flip-horizontal" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="901-834-1920" aria-label="901-834-1920"></i><span class="sr-only">901-834-1920</span>&nbsp;901-834-1920&nbsp;&nbsp;&nbsp;
+
+                                    </p>
+                                    <div class="multisteps-form__content mt-5">
+                                        <span class="font-weight-bolder h6">Candidate Skills</span><br>
+                                        <div class="mt-4" style="padding: 0 !important">
+                                            <div class="row icon-examples mb-4">
+                                                <div class="col-lg-3">
+                                                    <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                        <span class="row">
+                                                            <span class="col-md-8">
+                                                                <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Google Cloud Platform">
+                                                                    GCP
+                                                                </span>
+                                                            </span>
+                                                            <span class="col-md-4 text-right">
+                                                                <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                    5
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                        <span class="row">
+                                                            <span class="col-md-8">
+                                                                <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="BigQuery">
+                                                                    BigQuery
+                                                                </span>
+                                                            </span>
+                                                            <span class="col-md-4 text-right">
+                                                                <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                    3
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                        <span class="row">
+                                                            <span class="col-md-8">
+                                                                <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Python">
+                                                                    Python
+                                                                </span>
+                                                            </span>
+                                                            <span class="col-md-4 text-right">
+                                                                <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                    2
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                        <span class="row">
+                                                            <span class="col-md-8">
+                                                                <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Teradata">
+                                                                    Teradata
+                                                                </span>
+                                                            </span>
+                                                            <span class="col-md-4 text-right">
+                                                                <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                    1
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="multisteps-form__content mt-5">
+                                            <span class="font-weight-bolder h6">Add Candidate Basic Skills</span>
+                                            <span class="ni-blue text-sm"> | Add New Skill</span>
+                                            <div class="row mt-2">
+                                                <div class="col-12 col-sm-8 mt-sm-0">
+                                                    <label>Skill</label><span class="ni-red"> *</span>
+                                                    <input class="multisteps-form__input form-control" type="text" placeholder="eg. Java" onfocus="focused(this)" onfocusout="defocused(this)">
+                                                </div>
+                                                <div class="col-12 col-sm-2 mt-sm-0">
+                                                    <label>Experience</label><span class="ni-red"> *</span>
+                                                    <select class="multisteps-form__input form-control">
+                                                        <option value="0">- Select -</option>
+                                                        <option value="1">1 Year</option>
+                                                        <option value="2">2 Years</option>
+                                                        <option value="3">3 Years</option>
+                                                        <option value="4">4 Years</option>
+                                                        <option value="5">5 Years</option>
+                                                        <option value="6">6 Years</option>
+                                                        <option value="7">7 Years</option>
+                                                        <option value="8">8 Years</option>
+                                                        <option value="9">9 Year</option>
+                                                        <option value="10">10 Years</option>
+                                                        <option value="11">11 Years</option>
+                                                        <option value="12">12 Years</option>
+                                                        <option value="13">13 Years</option>
+                                                        <option value="14">14 Years</option>
+                                                        <option value="15">15 Years</option>
+                                                        <option value="16">15+ Years</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-2 mt-5 float-end">
+                                                    <span class="ni-blue text-sm">Add</span><span> | </span><span class="ni-red text-sm">Remove</span><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h6 class="font-weight-bolder mt-5">Required job Skills</h6>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center col-12 col-sm-10">
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">How many years of SAP MM experience?</h6>
+                                            </div>
+                                            <div class="col-12 col-sm-2 mt-3 mt-sm-0">
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="0">- Select -</option>
+                                                    <option value="1">1 Year</option>
+                                                    <option value="2">2 Years</option>
+                                                    <option value="3">3 Years</option>
+                                                    <option value="4">4 Years</option>
+                                                    <option value="5">5 Years</option>
+                                                    <option value="6">6 Years</option>
+                                                    <option value="7">7 Years</option>
+                                                    <option value="8">8 Years</option>
+                                                    <option value="9">9 Year</option>
+                                                    <option value="10">10 Years</option>
+                                                    <option value="11">11 Years</option>
+                                                    <option value="12">12 Years</option>
+                                                    <option value="13">13 Years</option>
+                                                    <option value="14">14 Years</option>
+                                                    <option value="15">15 Years</option>
+                                                    <option value="16">15+ Years</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center col-12 col-sm-10">
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">How many years of SAP EDI experience?</h6>
+                                            </div>
+                                            <div class="col-12 col-sm-2 mt-3 mt-sm-0">
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="0">- Select -</option>
+                                                    <option value="1">1 Year</option>
+                                                    <option value="2">2 Years</option>
+                                                    <option value="3">3 Years</option>
+                                                    <option value="4">4 Years</option>
+                                                    <option value="5">5 Years</option>
+                                                    <option value="6">6 Years</option>
+                                                    <option value="7">7 Years</option>
+                                                    <option value="8">8 Years</option>
+                                                    <option value="9">9 Year</option>
+                                                    <option value="10">10 Years</option>
+                                                    <option value="11">11 Years</option>
+                                                    <option value="12">12 Years</option>
+                                                    <option value="13">13 Years</option>
+                                                    <option value="14">14 Years</option>
+                                                    <option value="15">15 Years</option>
+                                                    <option value="16">15+ Years</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center col-12 col-sm-10">
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">How many years of SAP CPI experience?</h6>
+                                            </div>
+                                            <div class="col-12 col-sm-2 mt-3 mt-sm-0">
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="0">- Select -</option>
+                                                    <option value="1">1 Year</option>
+                                                    <option value="2">2 Years</option>
+                                                    <option value="3">3 Years</option>
+                                                    <option value="4">4 Years</option>
+                                                    <option value="5">5 Years</option>
+                                                    <option value="6">6 Years</option>
+                                                    <option value="7">7 Years</option>
+                                                    <option value="8">8 Years</option>
+                                                    <option value="9">9 Year</option>
+                                                    <option value="10">10 Years</option>
+                                                    <option value="11">11 Years</option>
+                                                    <option value="12">12 Years</option>
+                                                    <option value="13">13 Years</option>
+                                                    <option value="14">14 Years</option>
+                                                    <option value="15">15 Years</option>
+                                                    <option value="16">15+ Years</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="d-flex align-items-center col-12 col-sm-10">
+                                                <h6 class="mt-2 text-dark font-weight-bold text-sm">How many years of SAP S4HANA experience?</h6>
+                                            </div>
+                                            <div class="col-12 col-sm-2 mt-3 mt-sm-0">
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="0">- Select -</option>
+                                                    <option value="1">1 Year</option>
+                                                    <option value="2">2 Years</option>
+                                                    <option value="3">3 Years</option>
+                                                    <option value="4">4 Years</option>
+                                                    <option value="5">5 Years</option>
+                                                    <option value="6">6 Years</option>
+                                                    <option value="7">7 Years</option>
+                                                    <option value="8">8 Years</option>
+                                                    <option value="9">9 Year</option>
+                                                    <option value="10">10 Years</option>
+                                                    <option value="11">11 Years</option>
+                                                    <option value="12">12 Years</option>
+                                                    <option value="13">13 Years</option>
+                                                    <option value="14">14 Years</option>
+                                                    <option value="15">15 Years</option>
+                                                    <option value="16">15+ Years</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <h6 class="font-weight-bolder mt-4 mb-2">Submission rate confirmation</h6>
+                                            <div class="col-12 col-sm-6">
+                                                <label class="form-label">Add RTR Signed by Employer</label><span class="ni-red"> *</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="ni-red text-sm">Remove</span><br>
+
+                                                <input type="file" id="fileInput" name="file">
+
+                                            </div>
+                                            <div class="col-12 col-sm-3 mt-3 mt-sm-0">
+                                                <label>Rate / Hr on C2C</label><span class="ni-red"> *</span>
+                                                <input class="multisteps-form__input form-control" type="text" placeholder="eg. 90" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            </div>
+                                            <div class="col-12 col-sm-3 mt-3 mt-sm-0">
+                                                <label>Inclusive of all expenses?</label><span class="ni-red"> *</span>
+                                                <select class="multisteps-form__input form-control">
+                                                    <option value="yes">- Select -</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-6">
+                    <h5 class="font-weight-bolder mb-4">Appling for the job</h5>
+                    <div class="mt-lg-0">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Job title:</span>&nbsp;<span>Google Cloud Platform engineer</span>&nbsp;&nbsp;&nbsp;<span class="ni-blue text-sm">Copy JD</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Employment Type:</span>&nbsp;<span>Contract</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Duration:</span>&nbsp;<span>12 Months</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Work Type:</span>&nbsp;<span>Onsite</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Location:</span>&nbsp;<span>St. Louis, Missouri</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Rate:</span>&nbsp;<span>$100 / Hr on C2C</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Client:</span>&nbsp;<span>Ameri100 | Greg</span>
+                        </div>
+                    </div>
+                    <div class="mt-lg-0 mt-2">
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bg-success"></i>
+                            <span>Created On: 31 May 2023</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8 button-row d-flex" style="margin-top:-2%">
+                    <button class="btn bg-gradient-light mb-0 js-btn-prev" style="display:none" id="btnPrev" onclick="ChangePrevStep()" type="button" title="Prev">Prev</button>
+                    <button class="btn bg-gradient-info ms-auto mb-0 js-btn-next" onclick="ChangeNextStep()" id="btnNext" type="button" title="Next">Next</button>
+                </div>
+
+
+            </div>
+
+            <div id="006" style="display: none;">
+                <div class="row mt-0">
+                    <div class="col-lg-8" style="padding-right: 5rem;">
+                        <div class="row mt-0">
+                            <div class="col-12 m-auto">
+                                <form class="multisteps-form__form">
+                                    <!--single form panel-->
+                                    <div class="multisteps-form p-5 border-radius-xl js-active" data-animation="FadeIn">
+                                        <span class="font-weight-bolder mt-4 h6">Candidate Info</span><span> | </span><span class="ni-blue">edit</span>
+                                        <h6 class="font-weight-bolder mt-4 mb-2">Felicia Mathews</h6>
+                                        <p class="mb-0 text-sm mb-4">
+                                            <i class="fas fa-envelope fa-flip-horizontal" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="john@creative-tim.com" aria-label="john@creative-tim.com"></i><span class="sr-only">john@creative-tim.com</span>&nbsp;saikiran.nare@erpanalysts.com&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fas fa-phone fa-flip-horizontal" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="901-834-1920" aria-label="901-834-1920"></i><span class="sr-only">901-834-1920</span>&nbsp;901-834-1920&nbsp;&nbsp;&nbsp;
+
+                                        </p>
+                                        <div class="mt-lg-0">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>View attached documents:</span>&nbsp;<span class="ni-blue">Resume, DL Copy and Visa</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>LinkedIn:</span>&nbsp;<span>https://www.linkedin.com/in/mohan-nambi-862839a/</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>location:</span>&nbsp;<span>Alpharetta, Georgia</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>Relocation:</span>&nbsp;<span>Yes</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>Sourced From:</span>&nbsp;<span>Dice</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>Work authorization:</span>&nbsp;<span>H1B | valid till 16 Jan 2025</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>Total Work experience:</span>&nbsp;<span>15 Years</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>US experience</span>&nbsp;<span>8 Years</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2 mb-5">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span class="ni-blue">The candidate is willing to work on Techwaukee's W2 - </span>&nbsp;<span class="text-success">
+                                                    Yes
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-8 mb-5">
+                                            <span class="font-weight-bolder mt-5">Employment Details</span><span> | </span><span class="ni-blue">edit</span>
+                                            <div class="d-flex align-items-center mt-1 mb-4">
+                                                <span><p>Candidate designation<br>Techwaukee Solutions LLC | From 23 Apr 2018 Till 08 Aug 2023</p></span>
+                                            </div>
+                                        </div>
+                                        <div class="multisteps-form__content">
+                                            <div class="mb-2"><span class="font-weight-bolder mt-5">Candidate Skills</span><span> | </span><span class="ni-blue">edit</span></div>
+                                            <div class="mt-2" style="margin: 0 !important; padding: 0 !important">
+                                                <div class="row icon-examples mb-4">
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Google Cloud Platform">
+                                                                        GCP
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        5
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="BigQuery">
+                                                                        BigQuery
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        3
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Python">
+                                                                        Python
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        2
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Teradata">
+                                                                        Teradata
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        1
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2" style="margin: 0 !important; padding: 0 !important">
+                                                <div class="row icon-examples mb-4">
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Google Cloud Platform">
+                                                                        GCP
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        5
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Python">
+                                                                        Python
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        2
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Teradata">
+                                                                        Teradata
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        1
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="multisteps-form__content">
+                                            <div class="mb-2"><span class="font-weight-bolder mt-5">Required Job Skills</span><span> | </span><span class="ni-blue">edit</span></div>
+                                            <div class="mt-2" style="margin: 0 !important; padding: 0 !important">
+                                                <div class="row icon-examples mb-4">
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Google Cloud Platform">
+                                                                        GCP
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        5
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="BigQuery">
+                                                                        BigQuery
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        3
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Python">
+                                                                        Python
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        2
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button type="button" class="bg-gray-100 py-1 d-inline-block border border-light border-radius-md w-100 mb-1">
+                                                            <span class="row">
+                                                                <span class="col-md-8">
+                                                                    <span class="mt-1 mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Teradata">
+                                                                        Teradata
+                                                                    </span>
+                                                                </span>
+                                                                <span class="col-md-4 text-right">
+                                                                    <span class="text-xs mb-0" style="margin-top: 6px">
+                                                                        1
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 mt-5"><span class="font-weight-bolder mt-5">Submission details</span><span> | </span><span class="ni-blue">edit</span></div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>Submission rate: $90 / Hr on C2C</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>Yes, Submission rate Inclusive of all expenses</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-lg-0 mt-2">
+                                            <div class="d-flex align-items-center mb-4">
+                                                <i class="bg-success"></i>
+                                                <span>View attached document: </span>&nbsp;<span class="ni-blue"> RTR</span>
+                                            </div>
+                                        </div>
+                                        <div class="row col-lg-12 mt-5 mb-5">
+                                            <div><span class="font-weight-bolder mb-2 h6">Rating</span><span> | </span><span class="ni-blue">edit</span></div>
+                                            <div class="col-lg-3 mt-2">
+                                                <h1 class="ni-blue">50%</h1>
+                                                <span>AI Assessment</span>
+                                            </div>
+                                            <div class="col-lg-3 mt-2">
+                                                <h1 class="text-success">80%</h1>
+                                                <span>Recruiter's rating</span>
+                                            </div>
+                                            <div class="col-lg-3 mt-2">
+                                                <h1 class="text-success">90%</h1>
+                                                <span>Skill Matching</span>
+                                            </div>
+                                        </div>
+                                        <div class="align-items-center col-lg-12 mt-5">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Submission Remarks</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    </div>
+                                                    <h6 class="mt-2 text-dark font-weight-bold text-sm">Yes, I hereby acknowledge my willingness to submit this candidate's profile for the job.</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="button-row d-flex mt-2 mb-2 mt-2">
+                                            <button class="btn bg-gradient-light mb-0 js-btn-prev" type="button" title="Prev">Back</button>
+                                            <button class="btn bg-gradient-info ms-auto mb-0 js-btn-next" type="button" title="Perview">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-6" style="position: fixed; top: 70; right: 0; z-index: 999;">
+                        <h6 class="font-weight-bolder mb-4">Appling for the job</h6>
+                        <div class="mt-lg-0">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Job title:</span>&nbsp;<span>Google Cloud Platform engineer</span>&nbsp;&nbsp;&nbsp;<span class="ni-blue text-sm">Copy JD</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Employment Type:</span>&nbsp;<span>Contract</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Duration:</span>&nbsp;<span>12 Months</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Work Type:</span>&nbsp;<span>Onsite</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Location:</span>&nbsp;<span>St. Louis, Missouri</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Rate:</span>&nbsp;<span>$100 / Hr on C2C</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Client:</span>&nbsp;<span>Ameri100 | Greg</span>
+                            </div>
+                        </div>
+                        <div class="mt-lg-0 mt-2">
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="bg-success"></i>
+                                <span>Created On: 31 May 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*  <div class="col-md-4">
+            <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*             <div class="form-group">
+            <label asp-for="candidateid" class="control-label"></label>
+            <input asp-for="candidateid" class="form-control" />
+            <span asp-validation-for="candidateid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="candidateemailid" class="control-label"></label>
+            <input asp-for="candidateemailid" class="form-control" />
+            <span asp-validation-for="candidateemailid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="candidatemobileno" class="control-label"></label>
+            <input asp-for="candidatemobileno" class="form-control" />
+            <span asp-validation-for="candidatemobileno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="candidatename" class="control-label"></label>
+            <input asp-for="candidatename" class="form-control" />
+            <span asp-validation-for="candidatename" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="currentLocation" class="control-label"></label>
+            <input asp-for="currentLocation" class="form-control" />
+            <span asp-validation-for="currentLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="VisaStatus" class="control-label"></label>
+            <input asp-for="VisaStatus" class="form-control" />
+            <span asp-validation-for="VisaStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="YearsofExp" class="control-label"></label>
+            <input asp-for="YearsofExp" class="form-control" />
+            <span asp-validation-for="YearsofExp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="ratePerHr" class="control-label"></label>
+            <input asp-for="ratePerHr" class="form-control" />
+            <span asp-validation-for="ratePerHr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="type" class="control-label"></label>
+            <input asp-for="type" class="form-control" />
+            <span asp-validation-for="type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="ratecoverage" class="control-label"></label>
+            <input asp-for="ratecoverage" class="form-control" />
+            <span asp-validation-for="ratecoverage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="relocate" class="control-label"></label>
+            <input asp-for="relocate" class="form-control" />
+            <span asp-validation-for="relocate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="skillsandCertif" class="control-label"></label>
+            <input asp-for="skillsandCertif" class="form-control" />
+            <span asp-validation-for="skillsandCertif" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="linkedinURL" class="control-label"></label>
+            <input asp-for="linkedinURL" class="form-control" />
+            <span asp-validation-for="linkedinURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="noticePeriod" class="control-label"></label>
+            <input asp-for="noticePeriod" class="form-control" />
+            <span asp-validation-for="noticePeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="availableforinterview" class="control-label"></label>
+            <input asp-for="availableforinterview" class="form-control" />
+            <span asp-validation-for="availableforinterview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="employerid" class="control-label"></label>
+            <input asp-for="employerid" class="form-control" />
+            <span asp-validation-for="employerid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Submitted_To" class="control-label"></label>
+            <input asp-for="Submitted_To" class="form-control" />
+            <span asp-validation-for="Submitted_To" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Created_By" class="control-label"></label>
+            <input asp-for="Created_By" class="form-control" />
+            <span asp-validation-for="Created_By" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Created_On" class="control-label"></label>
+            <input asp-for="Created_On" class="form-control" />
+            <span asp-validation-for="Created_On" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="CreatedTime" class="control-label"></label>
+            <input asp-for="CreatedTime" class="form-control" />
+            <span asp-validation-for="CreatedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Last_Updated_By" class="control-label"></label>
+            <input asp-for="Last_Updated_By" class="form-control" />
+            <span asp-validation-for="Last_Updated_By" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Last_Updated_On" class="control-label"></label>
+            <input asp-for="Last_Updated_On" class="form-control" />
+            <span asp-validation-for="Last_Updated_On" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="UpdatedTime" class="control-label"></label>
+            <input asp-for="UpdatedTime" class="form-control" />
+            <span asp-validation-for="UpdatedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="additionalskill" class="control-label"></label>
+            <input asp-for="additionalskill" class="form-control" />
+            <span asp-validation-for="additionalskill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="PrimarySkill" class="control-label"></label>
+            <input asp-for="PrimarySkill" class="form-control" />
+            <span asp-validation-for="PrimarySkill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Certification" class="control-label"></label>
+            <input asp-for="Certification" class="form-control" />
+            <span asp-validation-for="Certification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Acknowledgement_content" class="control-label"></label>
+            <input asp-for="Acknowledgement_content" class="form-control" />
+            <span asp-validation-for="Acknowledgement_content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Firstname" class="control-label"></label>
+            <input asp-for="Firstname" class="form-control" />
+            <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Lastname" class="control-label"></label>
+            <input asp-for="Lastname" class="form-control" />
+            <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Sourcedfrom" class="control-label"></label>
+            <input asp-for="Sourcedfrom" class="form-control" />
+            <span asp-validation-for="Sourcedfrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Referralname" class="control-label"></label>
+            <input asp-for="Referralname" class="form-control" />
+            <span asp-validation-for="Referralname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Vendorname" class="control-label"></label>
+            <input asp-for="Vendorname" class="form-control" />
+            <span asp-validation-for="Vendorname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Portalname" class="control-label"></label>
+            <input asp-for="Portalname" class="form-control" />
+            <span asp-validation-for="Portalname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="additionalprimaryskill" class="control-label"></label>
+            <input asp-for="additionalprimaryskill" class="form-control" />
+            <span asp-validation-for="additionalprimaryskill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="additionalcertification" class="control-label"></label>
+            <input asp-for="additionalcertification" class="form-control" />
+            <span asp-validation-for="additionalcertification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="BS_Status" class="control-label"></label>
+            <input asp-for="BS_Status" class="form-control" />
+            <span asp-validation-for="BS_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Country" class="control-label"></label>
+            <input asp-for="Country" class="form-control" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="State" class="control-label"></label>
+            <input asp-for="State" class="form-control" />
+            <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="City" class="control-label"></label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            </form>
+            </div>
+            </div>
+            </div> *@
+
+        </div>
+    </div>
+</div>
+
+
+@* @section Scripts {
+        @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        } *@

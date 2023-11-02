@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Impl\**" />
+    <EmbeddedResource Remove="Impl\**" />
+    <None Remove="Impl\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ResumeParser.SDK\ResumeParser.SDK.csproj" />
+    <ProjectReference Include="..\Techwaukee.goRecruitAI.Models\Techwaukee.goRecruitAI.Models.csproj" />
+  </ItemGroup>
+
+</Project>

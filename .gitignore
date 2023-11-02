@@ -3,3 +3,21 @@
 ################################################################################
 
 /.vs
+/Techwaukee.goRecruitAI.Utilities/bin
+/Techwaukee.goRecruitAI.Utilities/obj
+/Techwaukee.goRecruitAI.UI/log
+/Techwaukee.goRecruitAI.UI/obj
+/Techwaukee.goRecruitAI.Services/bin/Debug/net6.0
+/Techwaukee.goRecruitAI.Services/obj
+/Techwaukee.goRecruitAI.Repository/obj
+/Techwaukee.goRecruitAI.Repository/bin/Debug/net6.0
+/Techwaukee.goRecruitAI.Models/bin/Debug/net6.0
+/Techwaukee.goRecruitAI.Models/obj
+/Techwaukee.goRecruitAI.Data/obj
+/Techwaukee.goRecruitAI.Data/bin/Debug/net6.0
+/Techwaukee.goRecruitAI.Console/obj
+/Techwaukee.goRecruitAI.Console/bin/Debug/net6.0
+/Techwaukee.goRecruitAI.Common/bin/Debug/net6.0
+/Techwaukee.goRecruitAI.Common/obj
+/ResumeParser.SDK/obj
+/ResumeParser.SDK/bin/Debug/net6.0

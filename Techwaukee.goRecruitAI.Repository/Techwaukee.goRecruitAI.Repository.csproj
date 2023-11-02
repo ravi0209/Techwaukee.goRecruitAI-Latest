@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="RecruitContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Techwaukee.goRecruitAI.Common\Techwaukee.goRecruitAI.Common.csproj" />
+    <ProjectReference Include="..\Techwaukee.goRecruitAI.Data\Techwaukee.goRecruitAI.Data.csproj" />
+    <ProjectReference Include="..\Techwaukee.goRecruitAI.Models\Techwaukee.goRecruitAI.Models.csproj" />
+    <ProjectReference Include="..\Techwaukee.goRecruitAI.Services\Techwaukee.goRecruitAI.Services.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,255 @@
+﻿@model IEnumerable<Techwaukee.goRecruitAI.Models.CandidateDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<script src="~/js/jquery.js"></script>
+<script src="~/js/jquery.multi-select.js"></script>
+<script src="~/js/jquery.multi-select.min.js"></script>
+
+<script>
+   $(document).ready(function(){
+       $("#div_Loader").hide();
+   })
+</script>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidateid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidateemailid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidatemobileno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidatename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisaStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearsofExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RatePerHr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ratecoverage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Relocate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SkillsandCertif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkedinUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoticePeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availableforinterview)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employerid)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Additionalskill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrimarySkill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcknowledgementContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sourcedfrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Referralname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendorname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Portalname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Additionalprimaryskill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Additionalcertification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BsStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Candidateid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Candidateemailid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Candidatemobileno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Candidatename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisaStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearsofExp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RatePerHr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ratecoverage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Relocate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkillsandCertif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkedinUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoticePeriod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Availableforinterview)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employerid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmittedTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Additionalskill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimarySkill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Certification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcknowledgementContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sourcedfrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Referralname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendorname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Portalname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Additionalprimaryskill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Additionalcertification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BsStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,237 @@
+﻿@{
+    Layout = null;
+}
+
+<!--
+=========================================================
+* Soft UI Dashboard PRO - v1.0.7
+=========================================================
+
+* Product Page:  https://www.creative-tim.com/product/soft-ui-dashboard-pro
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/images/favicon.png">
+    <title>
+        GorecruitAI | OTP Verification
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="~/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="~/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="~/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
+    <style>
+        /* Increase the size of the checkbox */
+        .form-check-input[type="checkbox"] {
+            transform: scale(0.8); /* Adjust the scale factor as needed */
+        }
+    </style>
+</head>
+
+<body class="">
+    <div class="bg-overlay loader_cls" id="div_Loader">
+        <section class="fullscreen">
+            <div class="container-fullwidth">
+                <div class="row justify-content-center p-60">
+                    <div class="col-md-12 text-center">
+                        <img class="h-100 w-100" src="~/Images/loader.gif" id="imgLoader" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+
+                <!-- End Navbar -->
+            </div>
+        </div>
+    </div>
+    <main class="main-content mt-0">
+        <section>
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                            <div class="card card-plain">
+                                <div class="card-header pb-0 text-start">
+                                    <h5 class="font-weight-bolder text-info text-gradient">OTP Verification</h5>
+                                    <p class="mb-2 text-dark" style="font-size: 12px;">A One-Time Password has been generated and sent to your registered email address at <span class="mt-1 ni-blue"> @ViewBag.UserEmail</span></p>
+                                </div>
+                                <div class="card-body">
+                                    <form role="form" class="text-start">
+                                        <div class="mb-2">
+                                            <input type="email" class="form-control" placeholder="Enter OTP" aria-label="Email" id="otpInput" value="@ViewBag.OTP">
+                                            <span id="otpTimer" style="font-size: 12px;"></span>
+                                            <a href="#" id="resendLink" style="display: none; font-size: 12px;">Resend OTP</a>
+                                        </div>
+                                        <p class="mt-1 ni-red" style="font-size: 12px;" id="errorMessage">
+                                            Invalid OTP. Please try again.
+                                        </p>
+                                        <div class="text-center">
+                                            <button type="button" id="btnLogin" class="btn bg-gradient-info w-100 mt-4 mb-0">Log In</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                            <div class="position-relative bg-gradient-info h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+                                <img src="~/images/pattern-lines.svg" alt="pattern-lines" class="position-absolute opacity-4 start-0">
+                                <div class="position-relative">
+                                    <img class="max-width-500 w-50 position-relative z-index-2" src="~/images/Light.png" alt="chat-img">
+                                </div>
+                                <h5 class="mt-5 text-white font-weight-bolder">"AI and Automated Recruitment Solution"</h5>
+                                <p class="text-white" style="font-size: 12px;">Advanced AI platform automates multi-channel candidate sourcing, automated screening, and data-driven insights for faster, smarter hiring decisions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <!--   Core JS Files   -->
+    <script src="~/js/core/popper.min.js"></script>
+    <script src="~/js/core/bootstrap.min.js"></script>
+    <script src="~/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/js/plugins/smooth-scrollbar.min.js"></script>
+    <!-- Kanban scripts -->
+    <script src="~/js/plugins/dragula/dragula.min.js"></script>
+    <script src="~/js/plugins/jkanban/jkanban.js"></script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+</body>
+<script>
+    $(document).ready(function () {
+        document.querySelectorAll('#btnLogin')
+            .forEach(input => input.addEventListener('click', this.click));
+    });
+</script>
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+
+<script>
+
+    // Set the initial OTP countdown time in seconds
+    let otpCountdown = 80;
+    let timerInterval; // Declare the timerInterval variable
+
+    // Function to start the countdown timer
+    function startOTPCountdown() {
+        const otpInput = document.getElementById('otpInput');
+        const otpTimer = document.getElementById('otpTimer');
+        const resendLink = document.getElementById('resendLink');
+
+        // Enable the input field
+        otpInput.disabled = false;
+
+        // Update the timer every second
+        timerInterval = setInterval(function () {
+            if (otpCountdown <= 0) {
+                // Clear the interval when the countdown reaches 0
+                clearInterval(timerInterval);
+
+                // Reset the timer text
+                otpTimer.textContent = '';
+
+                // Show the "Resend OTP" option
+                resendLink.style.display = 'inline'; // Display the resend link
+            } else {
+                // Display the remaining time in seconds
+                otpTimer.textContent = `Use OTP Within ${otpCountdown} seconds`;
+                otpCountdown--;
+            }
+        }, 1000); // Update the timer every 1 second
+    }
+
+    // Call the startOTPCountdown function to begin the countdown when needed
+    // For example, you can call it after displaying the input field
+    startOTPCountdown();
+
+    // Add an event listener to the "Resend OTP" link
+    const resendLink = document.getElementById('resendLink');
+    resendLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the link from navigating
+
+        // Hide the "Resend OTP" link
+        resendLink.style.display = 'none';
+
+        // Reset the countdown and start it again
+        otpCountdown = 120;
+        startOTPCountdown();
+    });   
+</script>
+<script>
+    $(document).ready(function () {
+        $("#div_Loader").hide();
+        $('#errorMessage').hide();
+        $('#btnLogin').click(function () {
+            
+            if ($('#otpInput').val() == undefined || $('#otpInput').val() == "") {
+                //alert("Enter OTP!")
+                $('#errorMessage').text("Enter OTP!");
+                $('#errorMessage').show();
+                return false;
+            }
+            else {
+                $("#div_Loader").show();
+                $.ajax({
+                    type: "GET",
+                    url: "/user/OtpVerification?otp=" + $('#otpInput').val(),
+                    success: function (response) {
+                        if (response != null && response != undefined) {
+                            if (response.status == "Success")
+                            {
+                                $("#div_Loader").hide();
+                                location.href = "/dashboard/index";
+                            }
+                            else
+                            {
+                                $('#errorMessage').text("Invalid OTP. Please try again.");
+                                $('#errorMessage').show();
+                                $("#div_Loader").hide();
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //var err = eval("(" + xhr.responseText + ")");
+                        //console.log(err.Message);
+                        $('#errorMessage').text("Invalid OTP. Please try again.");
+                        $('#errorMessage').show();
+                        $("#div_Loader").hide();
+                    }
+                });
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>recruIT_Utilities</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="itext7.pdfhtml" Version="5.0.1" />
+    <PackageReference Include="NPOI" Version="2.6.1" />
+    <PackageReference Include="TimePeriodLibrary.NETCore" Version="1.0.3" />
+  </ItemGroup>
+
+</Project>

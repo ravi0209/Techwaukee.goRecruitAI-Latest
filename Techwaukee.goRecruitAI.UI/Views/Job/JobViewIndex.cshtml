@@ -1,0 +1,653 @@
+﻿@model IEnumerable<Techwaukee.goRecruitAI.ViewModels.Jobdetail>
+
+@{
+    ViewData["Title"] = "JobView";
+}
+<script src="~/js/jquery.js"></script>
+<script src="~/js/jquery.multi-select.js"></script>
+<script src="~/js/jquery.multi-select.min.js"></script>
+
+<script>
+   $(document).ready(function(){
+       $("#div_Loader").hide();
+   })
+
+</script>
+
+<style>
+    body {
+        zoom: 80%;
+    }
+</style>
+
+
+  <div class="container-fluid py-4 hidden">
+        <div class="card">
+            <div class="p-3">
+            <div class="card-body">
+                 @foreach (var item in Model)
+                    {                        
+                <div class="col-lg-12 mx-auto">
+
+                    <div id="div_copytext" style="display: none;">
+                        <p id="hdnjobdescription0">
+                        </p>
+
+                        <input type="text" id="hdnjobdescription1" class="example" />
+                        <input type="text" id="hdnjobdescription2" style="color: white; border: none;" />
+                        <input type="text" id="hdnjobdescription3" style="color: white; border: none;" />
+                        <input type="text" id="hdnjobdescription4" style="color: white; border: none;" />
+                        <input type="text" id="hdnjobdescription5" style="color: white; border: none;" />
+
+
+                        <div id="div_skillmatrix">
+                        </div>
+
+                        <textarea id="hdnjobdescription6" style="color: white; border: none;"></textarea>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="m-0">
+                                <span class="h3" id="lblJobtitle">@Html.DisplayFor(modelItem => item.JobTitle)</span>&nbsp;&nbsp;&nbsp;
+                                <span class="badge badge-danger" id="lblPrioritylevel">@Html.DisplayFor(modelItem => item.Prioritylevel)</span>
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 mt-1 mb-3">
+                            <h6 class="mb-0 mt-1">
+                                <b>$
+                                    <span id="lblRate1">@Html.DisplayFor(modelItem => item.Rate1)</span>&nbsp;/ 
+                                    <span>Hr</span>&nbsp;on 
+                                    <span id="lblWorktype1">@Html.DisplayFor(modelItem => item.WorkType1)</span>
+                                </b>| 
+                                <span id="lblMonth">@Html.DisplayFor(modelItem => item.Duration) </span>
+                                <span id="lblMonthDuration">@Html.DisplayFor(modelItem => item.Durationtype)</span>|
+                                <span id="lblEmptype">@Html.DisplayFor(modelItem => item.EmplType)</span>|
+                                <span id="lblLocation">@Html.DisplayFor(modelItem => item.Location)</span>|
+                                <span id="lblCity">@Html.DisplayFor(modelItem => item.City)</span><span id="lblCity1">,</span>
+                                <span id="lblState">@Html.DisplayFor(modelItem => item.State)</span><span id="lblState1">,</span>
+                                <span id="lblCountry">@Html.DisplayFor(modelItem => item.Country)</span>
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <div class="col-md-12 mb-4">
+                            <div class="col-md-12">
+                                <label class="m-0 h6">
+                                    <b>Primary Skills</b>
+                                </label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row" id="div_primaryskill">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-2 mb-4">
+                            <div class="col-md-12">
+                                <label class="m-0 h6">
+                                    <b>Secondary skills</b>
+                                </label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row" id="div_secondaryskill">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                       
+
+                        <div class="col-lg-12 mt-2 mb-4">
+                            <h6 class="mb-0 mt-1">
+                                <b>Client</b>
+                            </h6>
+                            <p>
+                                <span id="lblClientname">@Html.DisplayFor(modelItem => item.Clientname)</span>|<span id="lblContactperson">@Html.DisplayFor(modelItem => item.Contactname)</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="col-md-12">
+                            <div id="div_updates">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p class="h6 modal-title">Create and edit updates</p>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <p class="mb-0 mt-1" style="font-size: 12px !important;">
+                                                        <span id="lblJobid" class="textsmall">@Html.DisplayFor(modelItem => item.Jobcode)</span>&nbsp;-&nbsp;
+                                                        @if (item.Jobstatus == "Open")
+                                                        {
+                                                            @Html.LabelFor(x => item.Jobstatus,item.Jobstatus,new { @class = "text-gradient text-success mb-2 text-sm",@id="lblJobstatus"})                                                    ;
+                                                        }
+
+                                                        else if (item.Jobstatus == "Close")
+                                                        {
+                                                            @Html.LabelFor(x => item.Jobstatus,item.Jobstatus,new { @class = "text-gradient text-danger mb-2 text-sm",@id="lblJobstatus"})                                                    ;
+                                                        }
+
+                                                         else if (item.Jobstatus == "Hold")
+                                                        {
+                                                            @Html.LabelFor(x => item.Jobstatus,item.Jobstatus,new { @class = "text-gradient text-dark mb-2 text-sm",@id="lblJobstatus"})                                                    ;
+                                                        }
+                                                      
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-4 modal-body scrollbar" style="height: 230px !important; overflow: scroll; overflow-x: hidden;">
+                                        <div class="mb-4">
+                                            <p class="mb-2 text-sm" style="color:#4444ff !important;font-weight:600">Latest update</p>
+                                            <p class="textsmall">
+                                                <span id="lbljobremarks"></span>-
+                                                <span id="lbllatestupdatename"></span>
+                                            </p>
+                                            <p class="mb-2 text-sm" style="color:#4444ff !important;font-weight:600">Job Created</p>
+                                            <p class="textsmall">
+                                                <span id="lblCreatedname">@Html.DisplayFor(modelItem => item.Created_By)</span>| 
+                                                <span id="lblcreatedate">@Html.DisplayFor(modelItem => item.Jobopendate)</span>- 
+                                                <span id="lblcreatetime">@Html.DisplayFor(modelItem => item.Created_Time)</span>
+                                            </p>
+                                            <p class="mb-2 text-sm" style="color:#4444ff !important;font-weight:600">Assign To</p>
+                                            <p class="textsmall">
+                                                <span id="lblAssignto">@Html.DisplayFor(modelItem => item.AssignedTo)</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="div_jobcomments" style="display: none !important;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <p class="h6 modal-title">Job Comments</p>
+                                    </div>
+                                    <div class="pt-4 modal-body scrollbar" style="height: 230px !important; overflow: scroll; overflow-x: hidden;">
+                                        <div class="" id="div_opencoments">
+                                            <p class="mb-0 text-sm" style="color: #00abec !important;">Open Comments</p>
+                                            <p class="text-gradient text-primary mb-2 text-sm" style="font-size: 12px !important;">
+                                                <span id="lblOpenname"></span>| 
+                                                <span id="lblOpendate"></span>- 
+                                                <span id="lblOpentime"></span>
+                                            </p>
+                                            <p style="font-size: 12px !important;" id="lblOpenComments">
+                                            </p>
+                                        </div>
+
+                                        <div class="" id="div_remarks">
+                                            <p class="mb-0 text-sm" style="color: #00abec !important;">Remarks</p>
+                                            <div id="div_remarkscontent">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="" id="div_CloseComments" style="display: none;">
+                                            <p class="mb-0 text-sm" style="color: #00abec !important;">Close Comments</p>
+                                            <p class="text-gradient text-primary mb-2 text-sm" style="color: #00abec !important; font-size: 12px !important;">
+                                                <span id="lblclosename"></span>| 
+                                                <span id="lblclosedate">03 Mar 2023</span> - 
+                                                <span id="lblclosetime">08:03 AM</span>
+                                            </p>
+                                            <p id="lblCloseComments" style="font-size: 12px !important;">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 text-center">
+                        <div class="col-md-12 mt-2">
+                            <a class="text-secondary highlight-blue" id="anchupdate" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-animation="true" onclick="changediv('ancupdate')">
+                                <i class="ni ni-single-02"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <a class="text-secondary" id="anchedit" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-animation="true" onclick="editmode()">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-12 mt-4" style="display: none;">
+                            <a class="text-secondary" id="anccomments" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-animation="true" onclick="changediv('anccomments')">
+                                <i class="ni ni-chat-round"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                            <a class="text-secondary" id="anchcopy" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-animation="true" onclick="copyJobdescription();">
+                                <i class="ni ni-ungroup"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-12 mt-4" id="div_website" style="display: none;">
+                            <a class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-animation="true" id="anch_website" href="#" target="_blank" onclick="gotoWebsitepage();">
+                                <i class="ni ni-send"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-12 mt-4" id="div_publish" style="display: none;">
+                            <a class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top" id="anch_publish" data-container="body" data-animation="true">
+                                <i class="ni ni-world"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 mt-5">
+                    <h6 class="mb-2 mt-1"><b>Job Description</b></h6>
+
+                    <div id="lblDescription">
+                        @Html.DisplayTextFor(modelItem => item.Description)
+                    </div>
+                </div>
+
+                <div class="p-0" id="div_table" >
+                                <div class="row mt-5">
+                    <div class="col-12">
+                         <div class="row p-2">
+                            <div class="col-md-10">
+                                <h5 id="candidatelist">Candidate List </h5>
+                                <h6 id="Externalcandidatename" style="display: none; margin: 8px;">Click on the add candidate button to add- <span id="Candidatename">Vishnu</span></h6>
+                            </div>
+                             <div class="col-lg-2 mt-lg-0 mt-2form-check form-switch ps-0">
+                                            <button id="btnAdd" class="btn bg-gradient-info btn-sm mb-0 mt-lg-auto w-100" type="button" name="button" onclick="CandidateApply()" >Add Candidate</button>
+                                        </div>
+                           
+                        </div>
+                <div class="col-md-12">
+                   <div class="ct-example" style="position: relative;border-bottom: none !important;padding: 1rem 1rem 2rem 1rem;margin-bottom: -1.25rem;">
+                       <div class="nav-wrapper position-relative end-0">
+                           <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                              <li class="nav-item" onclick="getJobFollowupData('Closure')" style="display:none;" id="li_Closure">
+                                   <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="true">
+                                       Closure<span class="ms-2 icon-color-green ni-green" id='lblclosurecount'></span>
+                                   </a>
+                               </li>
+                               <li class="nav-item" onclick="getJobFollowupData('Interview Candidate')" style="display:none;" id="li_Interview">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false">
+                                       Interview<span class="ms-2 icon-color-blue ni-blue" id='lblinterviewcount'></span>
+                                   </a>
+                               </li>
+                               <li class="nav-item" onclick="getJobFollowupData('Added Candidate')" style="display:none;" id="li_InProgress">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_Inprogress">
+                                       In Progress<span class="ms-2 icon-color-blue ni-blue" id='lblinprogresscount'></span>
+                                   </a>
+                               </li>
+                               <li class="nav-item" onclick="getJobFollowupData('Applied Candidate')" style="display:none;" id="li_Applied">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_InApplied">
+                                       Applied<span class="ms-2 icon-color-blue ni-blue" id='lblappliedcount'></span>
+                                   </a>
+                               </li>
+                                <li class="nav-item" onclick="getJobFollowupData('Bench Cand')" style="display:none;" id="li_Bench" >
+                                                    <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_InBench">
+                                                        <span>Bench Matching</span><span class="ps-2 icon-color-blue ni-blue" id='lblbenchcount'></span>
+                                                    </a>
+                                                </li>
+                               <li class="nav-item" onclick="getJobFollowupData('Vendor Cand')" style="display:none;" id="li_Vendor">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_InVendor">
+                                       Vendor<span class="ms-2 icon-color-blue ni-blue" id='lblvendorcount'></span>
+                                   </a>
+                               </li>
+                               <li class="nav-item" onclick="getJobFollowupData('Draft Candidate')" style="display:none;" id="li_Draft">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_InDraft">
+                                       Draft<span class="ms-2 icon-color-blue ni-blue" id='lbldraftcount'></span>
+                                   </a>
+                               </li>
+                               <li class="nav-item" onclick="getJobFollowupData('Rejected')" style="display:none;" id="li_Rejected">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_InRejected">
+                                       Rejected<span class="ms-2 icon-color-red ni-red" id='lblrejectedcount'></span>
+                                   </a>
+                               </li>
+                                <li class="nav-item" onclick="getJobFollowupData('Matching')" style="display:block;" id="li_MatchingProfiles">
+                                   <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" id="ach_InMatching">
+                                       Matching Profiles<span class="ms-2 icon-color-blue ni-blue" id='lblmatchingprofilescount'></span>
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+
+
+
+                        <div class="table" id="tblCandlist">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                  
+                                </thead>
+                                <tbody>
+                                   
+                                </tbody>
+                            </table>
+                            <div class="dataTable-bottom">
+                                <div class="dataTable-info" id="divInfo"></div>
+                                <div id="paginus" class="pagination pagination-info">
+                                    <div class="prev"><i class='ni ni-bold-left' aria-hidden='true'></i></div>
+                                    <div class="pagination pagination-info" id="divPages"></div>
+                                    <div class="next"><i class='ni ni-bold-right' aria-hidden='true'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-12 text-center" id="div_norecord" style="display:none;">
+                                <img src="Images/No Records Found.png" style="width: 500px; height: 500px;">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            }
+                <div class="col-md-12 mt-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" id="btnBack" class="btn bg-gradient-secondary btn-resize" onclick="gotoJobPage();">Back</button>
+                </div>
+                <div class="col-lg-6 text-right d-flex flex-column justify-content-center">
+                </div>
+            </div>
+        </div>
+
+            </div>
+            </div>
+        </div>
+
+    
+
+        
+    </div>
+
+    <div class="fixed-plugin" id="div_popfeedback">
+       
+        <div class="card shadow-lg blur">
+            <div class="card-header pb-0 pt-3  bg-transparent ">
+                <div class="float-start">
+                    <h5 class="mt-3 mb-0" id="lblJobtitlepop"></h5>
+                    <div>
+                        <span>
+                            <span id="lblJobdurationpop"> </span>
+                            <span>|</span>
+                            <span id="lblTypepop"></span>
+                            <span>|</span>
+                            <span id="lblWorkingtypepop"></span>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <span id="lblCitypop">Hartford</span>
+                            <span id="lblCity1pop">,</span>
+                            <span id="lblStatepop">Connecticut</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="float-end mt-4">
+                    <button class="btn btn-link text-dark p-0 fixed-plugin-close-button" onclick="popupfeedbackclose();">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+                <!-- End Toggle Button -->
+            </div>
+
+            <div id="viewmode">
+                <div class="card-header pb-0 row col-lg-12 pe-0">
+                    <div class="col-lg-9">
+                        <span class="h6">Application Track</span>
+                    </div>
+                    <div class="col-lg-3 ni-blue p-0" style="color: #0000f8;" id="div_update">
+                        <span onclick="givefeedbackopen()" style="cursor: pointer;">Update</span>
+                    </div>
+                </div>
+                <div class="card-body p-3 scrollbar" style="overflow:scroll; overflow-x:hidden;">
+                    <div class="timeline timeline-one-side" data-timeline-axis-style="dotted">
+                        <div class="timeline-block mb-3" id="div_Onboarding">
+                            <span class="timeline-step">
+                                <i class="fas fa-solid fa-star text-success text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">On Boarding</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span>Nirmal</span>
+                                    <span>-</span>
+                                    <span id="lblOnboardcreatedatepop">18 Aug 2022</span>
+                                    <span>|</span>
+                                    <span id="lblOnboardcreateontimepop">12:13 PM EST</span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span>On Boarding Date:</span>
+                                    <span id="txtOnboarDatepop">20 Dec 2021</span>
+                                     <br>
+                                    <span>Tentative End date:</span>
+                                    <span id="txtOnboarEndDatepop">20 Dec 2023</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-block mb-3" id="div_ECfeedback">
+                            <span class="timeline-step">
+                                <i class="ni ni-like-2 text-info text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">End Client Feedback</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span id="p_ECnamepop">Nirmal</span>
+                                    <span>-</span>
+                                    <span id="lblECFeedbackcreatedatepop">18 Aug 2022</span>
+                                    <span>|</span>
+                                    <span id="lblECFeedbackcreatedontimepop">12:13 PM EST</span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span id="txtECCommentspop">Got Selected start date will be 20 Dec 2021.</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-block mb-3" id="div_ECinterview">
+                            <span class="timeline-step">
+                                <i class="ni ni-check-bold text-info text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">End Client Interview</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span id="p_ECInamepop">Scheduled</span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span>Interviewer Name:</span>
+                                    <span id="drpECIntnamepop">CTS Tech Team</span>
+                                     <br>
+                                    <span id="txtdateecpop">30 Nov 2021</span>
+                                    <span>|</span>
+                                    <span id="txtTimeecpop">06:00 PM</span>
+                                    <span id="drpECTimezonepop">CST</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-block mb-3" id="div_BPfeedback">
+                            <span class="timeline-step">
+                                <i class="ni ni-check-bold text-info text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">Business Partner Feedback</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span id="p_BPnamepop">Nirmal</span>
+                                    <span>-</span>
+                                    <span id="lblBPFeedbackcreatedatepop">18 Aug 2022</span>
+                                    <span>|</span>
+                                    <span id="lblBPFeedbackcreatedontimepop">12:13 PM EST</span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span id="txtBPCommentspop">Approve, Good fit.</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-block mb-3" id="div_BPinterview">
+                            <span class="timeline-step">
+                                <i class="ni ni-check-bold text-info text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">Business Partner Interview</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span id="p_BPInamepop">Scheduled</span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span>Interviewer Name:</span>
+                                    <span id="lblBPIntnamepop">Rajesh</span>
+                                     <br>
+                                    <span id="txtBIDatepop">30 Nov 2021</span>
+                                    <span>|</span>
+                                    <span id="txtBITimepop">06:00 PM </span>
+                                    <span id="txtBPTimezonepop">CST</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-block mb-3" id="div_TLfeedback">
+                            <span class="timeline-step">
+                                <i class="ni ni-check-bold text-info text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">Team Lead Feedback</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span id="p_Teamleadnamepop">Nirmal</span>
+                                    <span>-</span>
+                                    <span id="lblTlcommentscreatedondatepop">18 Aug 2022</span>
+                                    <span>|</span>
+                                    <span id="lblTlcommentscreatedontimepop">12:13 PM EST </span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span id="txtTLCommentspop">Good, I approve and submit to BP.</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-block mb-3" id="div_recsubmission">
+                            <span class="timeline-step">
+                                <i class="ni ni-check-bold text-info text-gradient"></i>
+                            </span>
+                            <div class="timeline-content">
+                                <h6 class="text-dark text-sm font-weight-bold mb-0">Recruiter submission</h6>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    <span id="p_Recruiternamepop">Nirmal</span>
+                                    <span>-</span>
+                                    <span id="lblRecrutiercreatedatepop">18 Nov 2021</span>
+                                    <span>|</span>
+                                    <span id="lblRecrutiercreatedontimepop">03:46 AM EST</span>
+                                </p>
+                                <p class="text-sm mt-3 mb-2">
+                                    <span id="txtRecCommentspop">Good Candidate, Good comm skill and Candidate is certificated GCP Architect.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="ms-auto my-auto mt-lg-0 mt-4">
+        <div class="ms-auto my-auto">
+            <div class="modal fade" id="msgpopup" tabindex="-1" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog" style="max-width: 700px !important; margin-top: 15rem !important;">
+                    <div class="modal-content pb-0" style="padding: 20px;">
+
+                        <div class="col-md-12 pb-0">
+                            <p class="mb-0 h6"><span id="div-message">Comments</span></p>
+                            <textarea name="txtDec" rows="2" cols="20" id="txtCandidateComments" class="form-control text-font font_size mt-3" placeholder="Candidate Remarks" style="height: 100px;"></textarea>
+                        </div>
+
+                        <div class="modal-footer text-center pe-0" style="border-top: none;">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn bg-gradient-primary mb-0 btn-resize" id="btnOk">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ms-auto my-auto mt-lg-0 mt-4">
+        <div class="ms-auto my-auto">
+            <div class="modal fade" id="msgpopup1" tabindex="-1" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog" style="max-width: 300px !important; margin-top: 15rem !important;">
+                    <div class="modal-content">
+
+                        <div class="col-md-12 mt-3 text-center">
+                            <p class="mb-0 h6"><span>Feedback Saved Succesfully</span></p>
+                        </div>
+
+                        <div class="modal-footer pt-0 text-center" style="border-top: none;">
+                            <div class="col-md-12">
+                                <button type="button" class="btn bg-gradient-primary mb-0 btn-resize" id="btnOk1" onclick="closepopup()">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ms-auto my-auto mt-lg-0 mt-4">
+            <div class="ms-auto my-auto">
+                <div class="modal fade" id="feedbackpopup" tabindex="-1" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog mt-lg-8">
+                        <div class="modal-content">
+                            <div class="modal-header pb-0 pt-2">
+                                <div class="col-md-12" id="lbljobinfohead">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="d-flex flex-column justify-content-center text-left">
+                                                <label class="ms-0" style="margin-bottom: -7px;">
+                                                    <input type="hidden" id="hdnCandid" >
+                                                   
+                                                    <span class="mb-0 text-sm h6" id="lblCandidatename">Prasanna Murugaiyan</span>
+                                                </label>
+                                                <p class="mb-1" style="cursor: pointer;">
+                                                    <span class="text-xs text-secondary mb-0" id="lblMobileNo">8545657585</span>
+                                                </p>
+                                                <p class="mb-0 mt-n3" style="cursor: pointer;">
+                                                    <span class="text-xs text-secondary mb-0" id="lblMailid">prasannamrugaiyan@gmail.com</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex flex-column justify-content-center text-right">
+                                                <label style="margin-bottom: -7px;">
+                                                    <input type="hidden" id="hdnJobid" value="TWEIND0236">
+                                                    <input type="hidden" id="hdnCandStatus" value="103">
+                                                    <span class="mb-0 text-sm h6" id="lblJobtitlePopup"> Scrum Master</span>
+                                                </label>
+                                                <p class="mb-0" style="cursor: pointer;">
+                                                    <span class="text-xs text-secondary mb-0" id="lblJobidPopup">TWEUSA0185</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-body col-md-12 pt-0">
+                                <label class="mb-0">Not Qualified Remark</label>
+                                <textarea name="txtDec" rows="2" cols="20" id="txtCandidateremark" class="form-control text-font font_size" placeholder="Remarks" style="height: 100px;"></textarea>
+                            </div>
+                          
+                            <div class="modal-footer mt-2">
+                                <div class="col-md-12 m-0">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="button" id="btnClose" class="btn bg-gradient-secondary btn-sm btn-resize m-0" data-bs-dismiss="modal" onclick="BenchsaleFollowupcloseNo();">Cancel</button>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <button type="button" class="btn bg-gradient-primary btn-sm btn-resize m-0" id="btnsubmit" onclick="NotQualified('100')" >Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
